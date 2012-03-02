@@ -17,8 +17,6 @@
 
 - (NSDictionary *)nfs_assertionsDescribingIndividual
 {
-    NSLog(@"%@", [self descriptionWithLocale:nil indent:0]);
-    
     NSMutableDictionary * assertions = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                         [NSMutableArray array], NDFamilyTreeAssertionType.characteristics,
                                         [NSMutableArray array], NDFamilyTreeAssertionType.citations,
@@ -106,9 +104,9 @@
     [[self.elements objectForKey:@"SEX"] enumerateObjectsUsingBlock:^(FSGEDCOMStructure * gender, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary * genderAssertion = [NSMutableDictionary dictionary];
         NSString * val = [gender value];
-        if ([val compare:@"male" options:NSCaseInsensitiveSearch]==NSOrderedSame) {
+        if ([val compare:@"m" options:NSCaseInsensitiveSearch]==NSOrderedSame) {
             [genderAssertion setObject:[NSDictionary dictionaryWithObject:@"Male" forKey:@"type"] forKey:@"value"];
-        } else if ([val compare:@"female" options:NSCaseInsensitiveSearch]==NSOrderedSame) {
+        } else if ([val compare:@"f" options:NSCaseInsensitiveSearch]==NSOrderedSame) {
             [genderAssertion setObject:[NSDictionary dictionaryWithObject:@"Female" forKey:@"type"] forKey:@"value"];
         } else { // unknown
             [genderAssertion setObject:[NSDictionary dictionaryWithObject:@"Unknown" forKey:@"type"] forKey:@"value"];
