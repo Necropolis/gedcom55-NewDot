@@ -45,9 +45,10 @@
         if (error)
             [NSException raise:@"Bad regex?" format:@"Seriously shouldn't be able to happen unless there's some catastrophic failure in ICU."];
         
-        [[assertions objectForKey:NDFamilyTreeAssertionType.names] addObject:
+        [[assertions objectForKey:NDFamilyTreeAssertionType.names] addObject:[NSDictionary dictionaryWithObject:
          [NSDictionary dictionaryWithObject:[NSArray arrayWithObject:[NSDictionary dictionaryWithObject:[removeSlashes stringByReplacingMatchesInString:[name value] options:0 range:NSMakeRange(0, [[name value] length]) withTemplate:@"$1"] forKey:@"fullText"]]
-                                     forKey:@"forms"]];
+                                     forKey:@"forms"]
+                                                                              forKey:@"value"]];
     }];
     /*
      ================================================ events are important, mkay?
@@ -74,7 +75,7 @@
             [birthEvent setObject:[NSDictionary dictionaryWithObject:[placeOfBirth value] forKey:@"original"] forKey:@"place"];
         }
         
-        [[assertions objectForKey:NDFamilyTreeAssertionType.events] addObject:birthEvent];
+        [[assertions objectForKey:NDFamilyTreeAssertionType.events] addObject:[NSDictionary dictionaryWithObject:birthEvent forKey:@"value"]];
     }];
     [[self.elements objectForKey:@"DEAT"] enumerateObjectsUsingBlock:^(FSGEDCOMStructure * death, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary * deathEvent = [[NSMutableDictionary alloc] initWithCapacity:3];
@@ -89,7 +90,7 @@
             [deathEvent setObject:[NSDictionary dictionaryWithObject:[placeOfDeath value] forKey:@"original"] forKey:@"place"];
         }
         
-        [[assertions objectForKey:NDFamilyTreeAssertionType.events] addObject:deathEvent];
+        [[assertions objectForKey:NDFamilyTreeAssertionType.events] addObject:[NSDictionary dictionaryWithObject:deathEvent forKey:@"value"]];
     }];
     /*
      ================================================ gender has meaning
